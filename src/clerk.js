@@ -24,17 +24,17 @@ window.APP = {
   store
 };
 
-function click(url) {
+function click(prefecture, town, shopName) {
   // store.state["address"] = {
   //   prefecture: document.getElementById("combo-box-demo").value,
   //   city: document.getElementById("standard-basic").value,
   //   storeName: document.getElementById("standard-required").value
   // };
   store.updateAddress({
-    prefecture: document.getElementById("combo-box-demo").value,
-    city: document.getElementById("standard-basic").value,
-    storeName: document.getElementById("standard-required").value
-  })
+    prefecture: prefecture,
+    city: town,
+    storeName: shopName
+  });
   console.log(
     store.state
     // document.getElementById("combo-box-demo").value,
@@ -109,7 +109,13 @@ function Root() {
           </Box>
           <Box m="auto">
             <Grid container justify="center">
-              <Button variant="contained" color="primary" size="large" startIcon={<SaveIcon />}>
+              <Button
+                onClick={click.bind(this, prefecture, town, shopName)}
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<SaveIcon />}
+              >
                 Save
               </Button>
             </Grid>
