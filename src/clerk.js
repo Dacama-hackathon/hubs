@@ -15,11 +15,12 @@ import { Box, Button, Grid, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import SaveIcon from "@material-ui/icons/Save";
 import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles } from "@material-ui/core/styles";
 
 // import { AuthContextProvider } from "./scene-entry-manager";
 
@@ -30,26 +31,74 @@ window.APP = {
   store
 };
 
-const prefectureList = ["北海道", "東京都", "大阪府", "沖縄県"];
-
-const useStyles = makeStyles(() => ({
-  list: {
-    // width: "100%",
-    // maxWidth: 360,
-    // backgroundColor: theme.palette.background.paper
-    margin: "0px"
-  }
-}));
+const prefectureList = [
+  "北海道",
+  "青森県",
+  "岩手県",
+  "宮城県",
+  "秋田県",
+  "山形県",
+  "福島県",
+  "茨城県",
+  "栃木県",
+  "群馬県",
+  "埼玉県",
+  "千葉県",
+  "東京都",
+  "神奈川県",
+  "新潟県",
+  "富山県",
+  "石川県",
+  "福井県",
+  "山梨県",
+  "長野県",
+  "岐阜県",
+  "静岡県",
+  "愛知県",
+  "三重県",
+  "滋賀県",
+  "京都府",
+  "大阪府",
+  "兵庫県",
+  "奈良県",
+  "和歌山県",
+  "鳥取県",
+  "島根県",
+  "岡山県",
+  "広島県",
+  "山口県",
+  "徳島県",
+  "香川県",
+  "愛媛県",
+  "高知県",
+  "福岡県",
+  "佐賀県",
+  "長崎県",
+  "熊本県",
+  "大分県",
+  "宮崎県",
+  "鹿児島県",
+  "沖縄県"
+];
 
 function Root() {
   const [prefecture, setPrefecture] = useState(prefectureList[0]);
   const [town, setTown] = useState("京都市中京区 二条下ル土橋町10番地");
   const [shopName, setShopName] = useState("京みやげ売店");
   const [goodsURL, setGoodsURL] = useState("");
-  const [goodsURLs, setGoodsURLs] = useState([]);
+  const [goodsURLs, setGoodsURLs] = useState([
+    "https://amazom.com/aaadddda",
+    "https://amazom.com/",
+    "https://amazom.com/xxxxxxxxxxx"
+  ]);
+  const [resourceURL, setResourceURL] = useState("");
+  const [resourceURLs, setResourceURLs] = useState([
+    "https://www.youtube.com/watch?v=45JqX-xCs5M",
+    "https://www.youtube.com/watch?v=54yl24SVlVU",
+    "https://www.youtube.com/"
+  ]);
 
   const click = () => console.log(prefecture, town, shopName, goodsURLs);
-  const classes = useStyles();
 
   return (
     <WrappedIntlProvider locale={getLocale()} messages={getMessages()}>
@@ -88,31 +137,52 @@ function Root() {
           <Box>
             <Grid container alignItems="flex-end" direction="row">
               <Grid item xs={10}>
-                <TextField required label="商品のURL" onChange={e => setGoodsURL(e.target.value)} fullWidth />
+                <TextField
+                  required
+                  label="商品のURL"
+                  value={goodsURL}
+                  onChange={e => setGoodsURL(e.target.value)}
+                  fullWidth
+                />
               </Grid>
               <Grid item xs={1}>
                 <Button
                   color="primary"
                   size="medium"
                   startIcon={<AddIcon />}
-                  onClick={() => setGoodsURLs([...goodsURLs, goodsURL])}
+                  onClick={() => {
+                    if (goodsURL) {
+                      setGoodsURLs([...goodsURLs, goodsURL]);
+                      setGoodsURL("");
+                    }
+                  }}
                 />
               </Grid>
             </Grid>
           </Box>
           <Box>
-            <List>
-              {["https://amazom.com/aaadddda", "https://amazom.com/", "https://amazom.com/xxxxxxxxxxx"].map(value => {
+            <List dense>
+              {goodsURLs.map((url, index) => {
                 return (
-                  <ListItem key={value}>
+                  <ListItem key={url}>
                     <Grid container alignItems="flex-end" direction="row">
                       <Grid item xs={9}>
-                        <ListItemText id={value} primary={value} />
+                        <ListItemText id={url} primary={url} />
                       </Grid>
                       <Grid item xs={1}>
-                        <ListItem button={true} id={value}>
-                          <Button startIcon={<AddIcon />} size="medium" />
-                        </ListItem>
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => {
+                              const newGoodsURLs = [...goodsURLs];
+                              newGoodsURLs.splice(index, 1);
+                              setGoodsURLs(newGoodsURLs);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
                       </Grid>
                     </Grid>
                   </ListItem>
@@ -120,6 +190,64 @@ function Root() {
               })}
             </List>
           </Box>
+
+          <Box>
+            <Grid container alignItems="flex-end" direction="row">
+              <Grid item xs={10}>
+                <TextField
+                  required
+                  label="リソースのURL"
+                  value={resourceURL}
+                  onChange={e => setResourceURL(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <Button
+                  color="primary"
+                  size="medium"
+                  startIcon={<AddIcon />}
+                  onClick={() => {
+                    if (resourceURL) {
+                      setResourceURLs([...resourceURLs, resourceURL]);
+                      setResourceURL("");
+                    }
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+          <Box>
+            <List dense>
+              {resourceURLs.map((url, index) => {
+                return (
+                  <ListItem key={url}>
+                    <Grid container alignItems="flex-end" direction="row">
+                      <Grid item xs={9}>
+                        <ListItemText id={url} primary={url} />
+                      </Grid>
+                      <Grid item xs={1}>
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => {
+                              const newResourceURLs = [...resourceURLs];
+                              newResourceURLs.splice(index, 1);
+                              setResourceURLs(newResourceURLs);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Box>
+
           <Box my={4}>
             <Grid container justify="center">
               <Button variant="contained" color="primary" size="large" startIcon={<SaveIcon />} onClick={() => click()}>
