@@ -3,6 +3,7 @@ import configs from "./utils/configs";
 import "./utils/theme";
 import "@babel/polyfill";
 import "./utils/debug-log";
+const fetch = require("node-fetch");
 
 console.log(`App version: ${process.env.BUILD_VERSION || "?"}`);
 
@@ -160,6 +161,8 @@ import "./gltf-component-mappings";
 
 import { App } from "./App";
 import { platformUnsupported } from "./support";
+
+// const store = new Store();
 
 window.APP = new App();
 window.APP.RENDER_ORDER = {
@@ -869,6 +872,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const authChannel = new AuthChannel(store);
   const hubChannel = new HubChannel(store, hubId);
   const entryManager = new SceneEntryManager(hubChannel, authChannel, history);
+  await fetch("http://localhost:3000/travel", {})
+    .then(res => res.json())
+    .then(json => {
+      store.getAddress(json["travel"]);
+      console.log("state", store.state);
+    });
+  console.log("state", store.state);
   console.log(999999, document.location, entryManager.spawnMediaInfrontOfPlayer);
   entryManager.spawnMediaInfrontOfPlayer(
     "https://upload.wikimedia.org/wikipedia/commons/6/6e/%E6%B8%85%E6%B0%B4%E3%81%AE%E8%88%9E%E5%8F%B0%E3%81%8B%E3%82%89%E3%80%8C%E9%A3%9B%E3%81%B3%E9%99%8D%E3%82%8A%E3%80%8D%E3%82%8B%EF%BC%88%E6%B8%85%E6%B0%B4%E5%AF%BA%EF%BC%89Img552.jpg",

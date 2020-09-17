@@ -452,6 +452,12 @@ export default class Store extends EventTarget {
     });
   }
 
+  getAddress(gerAddress) {
+    this.update({
+      gerAddress: gerAddress
+    });
+  }
+
   bumpEntryCount() {
     const currentEntryCount = this.state.activity.entryCount || 0;
     this.update({
