@@ -875,8 +875,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (store.state.admin === true) {
     const body = {
       prefecture: store.state.address.prefecture,
-      city: store.state.address.city,
-      storeName: store.state.address.storeName,
+      town: store.state.address.town,
+      shopName: store.state.address.shopName,
       hubsURL: location.href
     };
     await fetch("http://localhost:3000/travel", { method: "POST", body: JSON.stringify(body) });
