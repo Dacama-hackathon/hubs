@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Header from "./react-components/header";
 import { WrappedIntlProvider } from "./react-components/wrapped-intl-provider";
@@ -11,7 +11,7 @@ import { AuthContextProvider } from "./react-components/auth/AuthContext";
 import "./assets/stylesheets/globals.scss";
 // import { Link } from "react-router-dom";
 
-import { Box, Button, Grid, TextField, Card } from "@material-ui/core";
+import { Box, Button, Grid, Card } from "@material-ui/core";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -28,85 +28,67 @@ window.APP = {
 };
 
 function Root() {
-  const click = async () => {};
-
-  const link = "https://localhost:8080/clerk";
-  const PREFECTURE_LIST = [
-    "北海道",
-    "青森県",
-    "岩手県",
-    "宮城県",
-    "秋田県",
-    "山形県",
-    "福島県",
-    "茨城県",
-    "栃木県",
-    "群馬県",
-    "埼玉県",
-    "千葉県",
-    "東京都",
-    "神奈川県",
-    "新潟県",
-    "富山県",
-    "石川県",
-    "福井県",
-    "山梨県",
-    "長野県",
-    "岐阜県",
-    "静岡県",
-    "愛知県",
-    "三重県",
-    "滋賀県",
-    "京都府",
-    "大阪府",
-    "兵庫県",
-    "奈良県",
-    "和歌山県",
-    "鳥取県",
-    "島根県",
-    "岡山県",
-    "広島県",
-    "山口県",
-    "徳島県",
-    "香川県",
-    "愛媛県",
-    "高知県",
-    "福岡県",
-    "佐賀県",
-    "長崎県",
-    "熊本県",
-    "大分県",
-    "宮崎県",
-    "鹿児島県",
-    "沖縄県"
-  ];
-  const shops = [
-    { prefecture: "奈良県", town: "生駒市十津川村25", shopName: "十津川道の駅" },
-    { prefecture: "京都府", town: "京都市左京区吉田河原町", shopName: "京都物産館" }
-  ];
-  const prefectureList = shops.reduce((acc, value) => {
-    acc.push(value.prefecture);
-    return acc;
+  const [shops, setShops] = useState([
+    {
+      prefecture: "奈良県",
+      town: "十津川村25",
+      shopName: "十津川道の駅",
+      hubsURL: "https://localhost:8080/hub.html?hub_id=?"
+    },
+    {
+      prefecture: "奈良県",
+      town: "奈良市",
+      shopName: "鹿せんべいの店",
+      hubsURL: "https://localhost:8080/hub.html?hub_id=?"
+    },
+    {
+      prefecture: "京都府",
+      town: "京都市左京区吉田河原町",
+      shopName: "京都物産館",
+      hubsURL: "https://localhost:8080/hub.html?hub_id=?"
+    }
+  ]);
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://localhost:3000/travel", {})
+        .then(res => res.json())
+        .then(json => {
+          store.getAddress(json["travel"]);
+          console.log("state", store.state.gerAddress);
+          setShops(store.state.gerAddress);
+        });
+    };
+    fetchData();
   }, []);
 
+  const prefectureList = Array.from(
+    new Set(
+      shops.reduce((acc, value) => {
+        acc.push(value.prefecture);
+        return acc;
+      }, [])
+    )
+  );
+
+  // store.state.getAddress
+  // [{"prefecture": "京都府xxx","town": "京都市右京区","shopName": "かしや","hubsURL": "https://hubs.com/???"},{"prefecture": "京都府xxx","town": "京都市右京区","shopName": "かしや","hubsURL": "https://hubs.com/???"}]
   return (
     <WrappedIntlProvider locale={getLocale()} messages={getMessages()}>
       <AuthContextProvider store={store}>
         {/* {JSON.stringify(store.state)} */}
         <Header />
-        <Box marginTop={8} marginX={2}>
+        <Box marginTop={8} mx={1}>
           <Box my={4}>
             <Grid container justify="center">
               <List dense>
                 {prefectureList.map(prefecture => {
                   return (
-                    <ListItem dense key={prefecture}>
-                      {prefecture}
-                      <br />
-                      <List dense>
+                    <ListItem dense disableGutters key={prefecture}>
+                      <Grid container justify="center" direction="row">
+                        {prefecture}
                         {shops.filter(_shop => _shop.prefecture == prefecture).map((shop, index) => {
                           return (
-                            <ListItem key={index}>
+                            <ListItem disableGutters key={index}>
                               <Box width="100%" marginY={1}>
                                 <Card variant="elevation">
                                   <CardContent>
@@ -121,57 +103,20 @@ function Root() {
                                     </Typography>
                                   </CardContent>
                                   <CardActions>
-                                    <Button size="small">Go to VR</Button>
+                                    <Button size="small" onClick={() => (window.location.href = shop.hubsURL)}>
+                                      Go to VR
+                                    </Button>
                                   </CardActions>
                                 </Card>
                               </Box>
                             </ListItem>
                           );
                         })}
-                      </List>
+                      </Grid>
                     </ListItem>
                   );
                 })}
               </List>
-
-              {/* <List dense>{shops.map((shop, index) => {})}</List> */}
-              <Box width="100%" marginY={1}>
-                <Card variant="elevation">
-                  <CardContent>
-                    <Typography color="textSecondary" variant="body2" gutterBottom>
-                      生駒市十津川村25
-                    </Typography>
-                    <Typography variant="h5" component="h2">
-                      十津川道の駅
-                    </Typography>
-                    <Typography color="textSecondary" variant="body2">
-                      食べ物、お土産
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Go to VR</Button>
-                  </CardActions>
-                </Card>
-              </Box>
-
-              <Box width="100%" marginY={1}>
-                <Card variant="elevation">
-                  <CardContent>
-                    <Typography color="textSecondary" variant="body2" gutterBottom>
-                      京都市左京区吉田河原町
-                    </Typography>
-                    <Typography variant="h5" component="h2">
-                      京都物産館
-                    </Typography>
-                    <Typography color="textSecondary" variant="body2">
-                      食べ物、お土産
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Go to VR</Button>
-                  </CardActions>
-                </Card>
-              </Box>
             </Grid>
           </Box>
         </Box>
@@ -179,6 +124,15 @@ function Root() {
     </WrappedIntlProvider>
   );
 }
+
+// (async () => {
+//   fetch("http://localhost:3000/travel", {})
+//     .then(res => res.json())
+//     .then(json => {
+//       store.getAddress(json["travel"]);
+//       console.log("state", store.state);
+//     });
+// })();
 
 ReactDOM.render(<Root />, document.getElementById("ui-root"));
 
