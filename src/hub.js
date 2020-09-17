@@ -893,7 +893,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     "https://upload.wikimedia.org/wikipedia/commons/6/6e/%E6%B8%85%E6%B0%B4%E3%81%AE%E8%88%9E%E5%8F%B0%E3%81%8B%E3%82%89%E3%80%8C%E9%A3%9B%E3%81%B3%E9%99%8D%E3%82%8A%E3%80%8D%E3%82%8B%EF%BC%88%E6%B8%85%E6%B0%B4%E5%AF%BA%EF%BC%89Img552.jpg",
     1
   );
-  entryManager.spawnMediaInfrontOfPlayer("https://www.youtube.com/watch?v=hEBEz0IZ1WE", 1);
+  entryManager.spawnMediaInfrontOfPlayer("https://www.youtube.com/watch?v=IC4THwh62xo", 1);
   const performConditionalSignIn = async (predicate, action, messageId, onFailure) => {
     if (predicate()) return action();
 

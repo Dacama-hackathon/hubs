@@ -319,12 +319,11 @@ export default class SceneEntryManager {
   };
 
 
-  spawnMediaInfrontOfPlayer = (src, contentOrigin) => {
-    const offset = {
-      x: 0,
-      y: 0,
-      z: -1.5
-    };
+  spawnMediaInfrontOfPlayer = (src, contentOrigin, offset = {
+    x: 1, // 横
+    y: 0.5, // 高さ
+    z: -1.5 // 回転
+  }) => {
     // if (!this.hubChannel.can("spawn_and_move_media")) return;
     const {
       entity,
