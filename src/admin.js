@@ -19,7 +19,7 @@ window.APP = {
 };
 
 function click(url) {
-  console.log(document.getElementById("url").value);
+  console.log(store.state);
   // spawnMediaInfrontOfPlayer();
 }
 
@@ -27,8 +27,8 @@ function Root() {
   return (
     <WrappedIntlProvider locale={getLocale()} messages={getMessages()}>
       <AuthContextProvider store={store}>
-        {location.search}
-        <input id="url" type="text" value="https://www.youtube.com/watch?v=xyN9PskyXgw" />
+        {" "}
+        {location.search} <input id="url" type="text" value="https://www.youtube.com/watch?v=xyN9PskyXgw" />
         <button onClick={click.bind(document.getElementById("url"))}> Create </button>{" "}
       </AuthContextProvider>{" "}
     </WrappedIntlProvider>

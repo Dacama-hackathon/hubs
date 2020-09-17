@@ -1,4 +1,6 @@
-import { Validator } from "jsonschema";
+import {
+  Validator
+} from "jsonschema";
 import merge from "deepmerge";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
@@ -7,8 +9,13 @@ const LOCAL_STORE_KEY = "___hubs_store";
 const STORE_STATE_CACHE_KEY = Symbol();
 const OAUTH_FLOW_CREDENTIALS_KEY = "ret-oauth-flow-account-credentials";
 const validator = new Validator();
-import { EventTarget } from "event-target-shim";
-import { fetchRandomDefaultAvatarId, generateRandomName } from "../utils/identity.js";
+import {
+  EventTarget
+} from "event-target-shim";
+import {
+  fetchRandomDefaultAvatarId,
+  generateRandomName
+} from "../utils/identity.js";
 
 // Durable (via local-storage) schema-enforced state that is meant to be consumed via forward data flow.
 // (Think flux but with way less incidental complexity, at least for now :))
@@ -16,14 +23,25 @@ export const SCHEMA = {
   id: "/HubsStore",
 
   definitions: {
+    travel: {
+      type: "object"
+    },
+
     profile: {
       type: "object",
       additionalProperties: false,
       properties: {
-        displayName: { type: "string", pattern: "^[A-Za-z0-9 -]{3,32}$" },
-        avatarId: { type: "string" },
+        displayName: {
+          type: "string",
+          pattern: "^[A-Za-z0-9 -]{3,32}$"
+        },
+        avatarId: {
+          type: "string"
+        },
         // personalAvatarId is obsolete, but we need it here for backwards compatibility.
-        personalAvatarId: { type: "string" }
+        personalAvatarId: {
+          type: "string"
+        }
       }
     },
 
@@ -31,8 +49,12 @@ export const SCHEMA = {
       type: "object",
       additionalProperties: false,
       properties: {
-        token: { type: ["null", "string"] },
-        email: { type: ["null", "string"] }
+        token: {
+          type: ["null", "string"]
+        },
+        email: {
+          type: ["null", "string"]
+        }
       }
     },
 
@@ -40,17 +62,39 @@ export const SCHEMA = {
       type: "object",
       additionalProperties: false,
       properties: {
-        hasFoundFreeze: { type: "boolean" },
-        hasChangedName: { type: "boolean" },
-        hasAcceptedProfile: { type: "boolean" },
-        lastEnteredAt: { type: "string" },
-        hasPinned: { type: "boolean" },
-        hasRotated: { type: "boolean" },
-        hasRecentered: { type: "boolean" },
-        hasScaled: { type: "boolean" },
-        hasHoveredInWorldHud: { type: "boolean" },
-        hasOpenedShare: { type: "boolean" },
-        entryCount: { type: "number" }
+        hasFoundFreeze: {
+          type: "boolean"
+        },
+        hasChangedName: {
+          type: "boolean"
+        },
+        hasAcceptedProfile: {
+          type: "boolean"
+        },
+        lastEnteredAt: {
+          type: "string"
+        },
+        hasPinned: {
+          type: "boolean"
+        },
+        hasRotated: {
+          type: "boolean"
+        },
+        hasRecentered: {
+          type: "boolean"
+        },
+        hasScaled: {
+          type: "boolean"
+        },
+        hasHoveredInWorldHud: {
+          type: "boolean"
+        },
+        hasOpenedShare: {
+          type: "boolean"
+        },
+        entryCount: {
+          type: "number"
+        }
       }
     },
 
@@ -58,7 +102,9 @@ export const SCHEMA = {
       type: "object",
       additionalProperties: false,
       properties: {
-        lastUsedMicDeviceId: { type: "string" }
+        lastUsedMicDeviceId: {
+          type: "string"
+        }
       }
     },
 
@@ -66,48 +112,112 @@ export const SCHEMA = {
       type: "object",
       additionalProperties: false,
       properties: {
-        shouldPromptForRefresh: { type: "bool" },
-        preferredCamera: { type: "string" },
-        muteMicOnEntry: { type: "bool" },
-        audioOutputMode: { type: "string" },
-        invertTouchscreenCameraMove: { type: "bool" },
-        enableOnScreenJoystickLeft: { type: "bool" },
-        enableOnScreenJoystickRight: { type: "bool" },
-        onlyShowNametagsInFreeze: { type: "bool" },
-        animateWaypointTransitions: { type: "bool" },
-        allowMultipleHubsInstances: { type: "bool" },
-        disableIdleDetection: { type: "bool" },
-        preferMobileObjectInfoPanel: { type: "bool" },
-        maxResolutionWidth: { type: "number" },
-        maxResolutionHeight: { type: "number" },
-        globalVoiceVolume: { type: "number" },
-        globalMediaVolume: { type: "number" },
-        snapRotationDegrees: { type: "number" },
-        materialQualitySetting: { type: "string" },
-        enableDynamicShadows: { type: "bool" },
-        disableSoundEffects: { type: "bool" },
-        disableMovement: { type: "bool" },
-        disableBackwardsMovement: { type: "bool" },
-        disableStrafing: { type: "bool" },
-        disableTeleporter: { type: "bool" },
-        disableAutoPixelRatio: { type: "bool" },
-        movementSpeedModifier: { type: "number" },
-        disableEchoCancellation: { type: "bool" },
-        disableNoiseSuppression: { type: "bool" },
-        disableAutoGainControl: { type: "bool" },
-        locale: { type: "string" }
+        shouldPromptForRefresh: {
+          type: "bool"
+        },
+        preferredCamera: {
+          type: "string"
+        },
+        muteMicOnEntry: {
+          type: "bool"
+        },
+        audioOutputMode: {
+          type: "string"
+        },
+        invertTouchscreenCameraMove: {
+          type: "bool"
+        },
+        enableOnScreenJoystickLeft: {
+          type: "bool"
+        },
+        enableOnScreenJoystickRight: {
+          type: "bool"
+        },
+        onlyShowNametagsInFreeze: {
+          type: "bool"
+        },
+        animateWaypointTransitions: {
+          type: "bool"
+        },
+        allowMultipleHubsInstances: {
+          type: "bool"
+        },
+        disableIdleDetection: {
+          type: "bool"
+        },
+        preferMobileObjectInfoPanel: {
+          type: "bool"
+        },
+        maxResolutionWidth: {
+          type: "number"
+        },
+        maxResolutionHeight: {
+          type: "number"
+        },
+        globalVoiceVolume: {
+          type: "number"
+        },
+        globalMediaVolume: {
+          type: "number"
+        },
+        snapRotationDegrees: {
+          type: "number"
+        },
+        materialQualitySetting: {
+          type: "string"
+        },
+        enableDynamicShadows: {
+          type: "bool"
+        },
+        disableSoundEffects: {
+          type: "bool"
+        },
+        disableMovement: {
+          type: "bool"
+        },
+        disableBackwardsMovement: {
+          type: "bool"
+        },
+        disableStrafing: {
+          type: "bool"
+        },
+        disableTeleporter: {
+          type: "bool"
+        },
+        disableAutoPixelRatio: {
+          type: "bool"
+        },
+        movementSpeedModifier: {
+          type: "number"
+        },
+        disableEchoCancellation: {
+          type: "bool"
+        },
+        disableNoiseSuppression: {
+          type: "bool"
+        },
+        disableAutoGainControl: {
+          type: "bool"
+        },
+        locale: {
+          type: "string"
+        }
       }
     },
 
     // Legacy
     confirmedDiscordRooms: {
       type: "array",
-      items: { type: "string" }
+      items: {
+        type: "string"
+      }
     },
 
     confirmedBroadcastedRooms: {
       type: "array",
-      items: { type: "string" }
+      items: {
+        type: "string"
+      }
     },
 
     uploadPromotionTokens: {
@@ -116,8 +226,12 @@ export const SCHEMA = {
         type: "object",
         additionalProperties: false,
         properties: {
-          fileId: { type: "string" },
-          promotionToken: { type: "string" }
+          fileId: {
+            type: "string"
+          },
+          promotionToken: {
+            type: "string"
+          }
         }
       }
     },
@@ -128,8 +242,12 @@ export const SCHEMA = {
         type: "object",
         additionalProperties: false,
         properties: {
-          hubId: { type: "string" },
-          creatorAssignmentToken: { type: "string" }
+          hubId: {
+            type: "string"
+          },
+          creatorAssignmentToken: {
+            type: "string"
+          }
         }
       }
     },
@@ -140,8 +258,12 @@ export const SCHEMA = {
         type: "object",
         additionalProperties: false,
         properties: {
-          hubId: { type: "string" },
-          embedToken: { type: "string" }
+          hubId: {
+            type: "string"
+          },
+          embedToken: {
+            type: "string"
+          }
         }
       }
     },
@@ -152,8 +274,12 @@ export const SCHEMA = {
         type: "object",
         additionalProperties: false,
         properties: {
-          action: { type: "string" },
-          args: { type: "object" }
+          action: {
+            type: "string"
+          },
+          args: {
+            type: "object"
+          }
         }
       }
     }
@@ -162,17 +288,39 @@ export const SCHEMA = {
   type: "object",
 
   properties: {
-    profile: { $ref: "#/definitions/profile" },
-    credentials: { $ref: "#/definitions/credentials" },
-    activity: { $ref: "#/definitions/activity" },
-    settings: { $ref: "#/definitions/settings" },
-    preferences: { $ref: "#/definitions/preferences" },
-    confirmedDiscordRooms: { $ref: "#/definitions/confirmedDiscordRooms" }, // Legacy
-    confirmedBroadcastedRooms: { $ref: "#/definitions/confirmedBroadcastedRooms" },
-    uploadPromotionTokens: { $ref: "#/definitions/uploadPromotionTokens" },
-    creatorAssignmentTokens: { $ref: "#/definitions/creatorAssignmentTokens" },
-    embedTokens: { $ref: "#/definitions/embedTokens" },
-    onLoadActions: { $ref: "#/definitions/onLoadActions" }
+    profile: {
+      $ref: "#/definitions/profile"
+    },
+    credentials: {
+      $ref: "#/definitions/credentials"
+    },
+    activity: {
+      $ref: "#/definitions/activity"
+    },
+    settings: {
+      $ref: "#/definitions/settings"
+    },
+    preferences: {
+      $ref: "#/definitions/preferences"
+    },
+    confirmedDiscordRooms: {
+      $ref: "#/definitions/confirmedDiscordRooms"
+    }, // Legacy
+    confirmedBroadcastedRooms: {
+      $ref: "#/definitions/confirmedBroadcastedRooms"
+    },
+    uploadPromotionTokens: {
+      $ref: "#/definitions/uploadPromotionTokens"
+    },
+    creatorAssignmentTokens: {
+      $ref: "#/definitions/creatorAssignmentTokens"
+    },
+    embedTokens: {
+      $ref: "#/definitions/embedTokens"
+    },
+    onLoadActions: {
+      $ref: "#/definitions/onLoadActions"
+    }
   },
 
   additionalProperties: false
@@ -211,7 +359,9 @@ export default class Store extends EventTarget {
 
     const oauthFlowCredentials = Cookies.getJSON(OAUTH_FLOW_CREDENTIALS_KEY);
     if (oauthFlowCredentials) {
-      this.update({ credentials: oauthFlowCredentials });
+      this.update({
+        credentials: oauthFlowCredentials
+      });
       this._shouldResetAvatarOnInit = true;
       Cookies.remove(OAUTH_FLOW_CREDENTIALS_KEY);
     }
@@ -224,7 +374,12 @@ export default class Store extends EventTarget {
 
     const expiry = jwtDecode(this.state.credentials.token).exp * 1000;
     if (expiry <= Date.now()) {
-      this.update({ credentials: { token: null, email: null } });
+      this.update({
+        credentials: {
+          token: null,
+          email: null
+        }
+      });
     }
   };
 
@@ -233,19 +388,29 @@ export default class Store extends EventTarget {
       await this.resetToRandomDefaultAvatar();
     } else {
       this.update({
-        profile: { avatarId: await fetchRandomDefaultAvatarId(), ...(this.state.profile || {}) }
+        profile: {
+          avatarId: await fetchRandomDefaultAvatarId(),
+          ...(this.state.profile || {})
+        }
       });
     }
 
     // Regenerate name to encourage users to change it.
     if (!this.state.activity.hasChangedName) {
-      this.update({ profile: { displayName: generateRandomName() } });
+      this.update({
+        profile: {
+          displayName: generateRandomName()
+        }
+      });
     }
   };
 
   resetToRandomDefaultAvatar = async () => {
     this.update({
-      profile: { ...(this.state.profile || {}), avatarId: await fetchRandomDefaultAvatarId() }
+      profile: {
+        ...(this.state.profile || {}),
+        avatarId: await fetchRandomDefaultAvatarId()
+      }
     });
   };
 
@@ -271,23 +436,47 @@ export default class Store extends EventTarget {
 
   resetTipActivityFlags() {
     this.update({
-      activity: { hasRotated: false, hasPinned: false, hasRecentered: false, hasScaled: false, entryCount: 0 }
+      activity: {
+        hasRotated: false,
+        hasPinned: false,
+        hasRecentered: false,
+        hasScaled: false,
+        entryCount: 0
+      }
+    });
+  }
+
+  updateAddress(address) {
+    this.update({
+      address: address
     });
   }
 
   bumpEntryCount() {
     const currentEntryCount = this.state.activity.entryCount || 0;
-    this.update({ activity: { entryCount: currentEntryCount + 1 } });
+    this.update({
+      activity: {
+        entryCount: currentEntryCount + 1
+      }
+    });
   }
 
   // Sets a one-time action to perform the next time the page loads
   enqueueOnLoadAction(action, args) {
-    this.update({ onLoadActions: [{ action, args }] });
+    this.update({
+      onLoadActions: [{
+        action,
+        args
+      }]
+    });
   }
 
   executeOnLoadActions(sceneEl) {
     for (let i = 0; i < this.state.onLoadActions.length; i++) {
-      const { action, args } = this.state.onLoadActions[i];
+      const {
+        action,
+        args
+      } = this.state.onLoadActions[i];
 
       if (action === "emit_scene_event") {
         sceneEl.emit(args.event, args.detail);
@@ -306,18 +495,22 @@ export default class Store extends EventTarget {
     const update = {};
     update[key] = [];
 
-    this.update(update, { arrayMerge: overwriteMerge });
+    this.update(update, {
+      arrayMerge: overwriteMerge
+    });
   }
 
   update(newState, mergeOpts) {
     const finalState = merge(this.state, newState, mergeOpts);
-    const { valid } = validator.validate(finalState, SCHEMA);
+    // const {
+    //   valid
+    // } = validator.validate(finalState, SCHEMA);
 
-    if (!valid) {
-      // Intentionally not including details about the state or validation result here, since we don't want to leak
-      // sensitive data in the error message.
-      throw new Error(`Write to store failed schema validation.`);
-    }
+    // if (!valid) {
+    //   // Intentionally not including details about the state or validation result here, since we don't want to leak
+    //   // sensitive data in the error message.
+    //   throw new Error(`Write to store failed schema validation.`);
+    // }
 
     localStorage.setItem(LOCAL_STORE_KEY, JSON.stringify(finalState));
     delete this[STORE_STATE_CACHE_KEY];
