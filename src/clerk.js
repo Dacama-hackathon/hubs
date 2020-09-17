@@ -82,20 +82,16 @@ const prefectureList = [
 ];
 
 function Root() {
-  const [prefecture, setPrefecture] = useState(prefectureList[0]);
+  const [prefecture, setPrefecture] = useState(prefectureList[25]);
   const [town, setTown] = useState("京都市中京区 二条下ル土橋町10番地");
-  const [shopName, setShopName] = useState("京みやげ売店");
+  const [shopName, setShopName] = useState("うまい八つ橋屋");
   const [goodsURL, setGoodsURL] = useState("");
-  const [goodsURLs, setGoodsURLs] = useState([
-    "https://amazom.com/aaadddda",
-    "https://amazom.com/",
-    "https://amazom.com/xxxxxxxxxxx"
-  ]);
+  const [goodsURLs, setGoodsURLs] = useState(["https://paypaymall.yahoo.co.jp/store/trv/item/61211967"]);
   const [resourceURL, setResourceURL] = useState("");
   const [resourceURLs, setResourceURLs] = useState([
-    "https://www.youtube.com/watch?v=45JqX-xCs5M",
-    "https://www.youtube.com/watch?v=54yl24SVlVU",
-    "https://www.youtube.com/"
+    "https://item-shopping.c.yimg.jp/i/n/trv_61211967",
+    "https://www.youtube.com/watch?v=iBnHVz1SGpw",
+    "http://www.ritsumei.ac.jp/~t-ito/otakara/otakara-kyo2008/yatuhasi.pdf"
   ]);
 
   const click = async () => {
@@ -106,6 +102,7 @@ function Root() {
     store.updateAdmin();
     // await fetch("http://localhost:3000", "POST", address);
     console.log(store.state);
+    document.location = "/";
   };
 
   return (
@@ -259,7 +256,13 @@ function Root() {
 
           <Box my={4}>
             <Grid container justify="center">
-              <Button variant="contained" color="primary" size="large" startIcon={<SaveIcon />} onClick={() => click()}>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                startIcon={<SaveIcon />}
+                onClick={() => click()}
+              >
                 Save
               </Button>
             </Grid>

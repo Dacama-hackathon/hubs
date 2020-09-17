@@ -34,7 +34,7 @@ const Header = ({ history }) => {
           <MenuIcon />
         </IconButton>
         {/* <HomeLink to="/"> */}
-        <div>Dacama</div>
+        <h3>Dacama</h3>
         {/* </HomeLink> */}
         {/* {currentUser ? (
           <SignOutButton onClick={signOut}>SignOut</SignOutButton>
@@ -47,6 +47,7 @@ const Header = ({ history }) => {
 };
 
 const HeaderToolbar = styled(DefaultToolbar)`
+  background-color: crimson;
   position: relative;
 `;
 
