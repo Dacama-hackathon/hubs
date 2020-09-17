@@ -877,9 +877,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       prefecture: store.state.address.prefecture,
       town: store.state.address.town,
       shopName: store.state.address.shopName,
+      goodsURLs: store.state.goodsURLs,
+      resourceURLs: store.state.resourceURLs,
       hubsURL: location.href
     };
-    await fetch("http://localhost:3000/travel", { method: "POST", body: JSON.stringify(body) });
+    await fetch("http://localhost:3000/travel", {
+      method: "POST",
+      body: JSON.stringify(body)
+    });
   }
   await fetch("http://localhost:3000/travel", {})
     .then(res => res.json())
@@ -887,13 +892,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       store.getAddress(json["travel"]);
       console.log("state", store.state);
     });
-  console.log("state", store.state);
-  console.log(999999, document.location, entryManager.spawnMediaInfrontOfPlayer);
-  entryManager.spawnMediaInfrontOfPlayer(
-    "https://upload.wikimedia.org/wikipedia/commons/6/6e/%E6%B8%85%E6%B0%B4%E3%81%AE%E8%88%9E%E5%8F%B0%E3%81%8B%E3%82%89%E3%80%8C%E9%A3%9B%E3%81%B3%E9%99%8D%E3%82%8A%E3%80%8D%E3%82%8B%EF%BC%88%E6%B8%85%E6%B0%B4%E5%AF%BA%EF%BC%89Img552.jpg",
-    1
-  );
-  entryManager.spawnMediaInfrontOfPlayer("https://www.youtube.com/watch?v=IC4THwh62xo", 1);
+  // console.log("state", store.state);
+  // console.log(999999, document.location, entryManager.spawnMediaInfrontOfPlayer);
+  // entryManager.spawnMediaInfrontOfPlayer(
+  //   "https://upload.wikimedia.org/wikipedia/commons/6/6e/%E6%B8%85%E6%B0%B4%E3%81%AE%E8%88%9E%E5%8F%B0%E3%81%8B%E3%82%89%E3%80%8C%E9%A3%9B%E3%81%B3%E9%99%8D%E3%82%8A%E3%80%8D%E3%82%8B%EF%BC%88%E6%B8%85%E6%B0%B4%E5%AF%BA%EF%BC%89Img552.jpg",
+  //   1
+  // );
+  // entryManager.spawnMediaInfrontOfPlayer("https://www.youtube.com/watch?v=IC4THwh62xo", 1);
+
+  let i = 1;
+
+  for (const goodsURL of store.state.goodsURLs || []) {
+    entryManager.spawnMediaInfrontOfPlayer(goodsURL, 1, {
+      x: i, // 横
+      y: 0.3 + i, // 高さ
+      z: -1.5 // 回転
+    });
+    i++;
+  }
+
+  for (const resourceURLs of store.state.resourceURLs || []) {
+    entryManager.spawnMediaInfrontOfPlayer(resourceURLs, 1, {
+      x: i, // 横
+      y: 0.3 + i, // 高さ
+      z: -1.5 // 回転
+    });
+    i++;
+  }
+
   const performConditionalSignIn = async (predicate, action, messageId, onFailure) => {
     if (predicate()) return action();
 

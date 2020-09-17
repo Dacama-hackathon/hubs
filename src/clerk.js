@@ -101,6 +101,8 @@ function Root() {
   const click = async () => {
     const address = { prefecture: prefecture, town: town, shopName: shopName };
     store.updateAddress(address);
+    store.updateGoodsURLs(goodsURLs);
+    store.updateResourceURLs(resourceURLs);
     store.updateAdmin();
     // await fetch("http://localhost:3000", "POST", address);
     console.log(store.state);
@@ -146,7 +148,7 @@ function Root() {
               <Grid item xs={10}>
                 <TextField
                   required
-                  label="商品のURL"
+                  label="紹介したいサイトのURL(商品購入サイトなど)"
                   value={goodsURL}
                   onChange={e => setGoodsURL(e.target.value)}
                   fullWidth
@@ -203,7 +205,7 @@ function Root() {
               <Grid item xs={10}>
                 <TextField
                   required
-                  label="リソースのURL"
+                  label="他のコンテンツのURL(動画や,画像, PDFなど)"
                   value={resourceURL}
                   onChange={e => setResourceURL(e.target.value)}
                   fullWidth

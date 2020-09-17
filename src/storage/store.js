@@ -458,6 +458,18 @@ export default class Store extends EventTarget {
     });
   }
 
+  updateGoodsURLs(goodsURLs) {
+    this.update({
+      goodsURLs: goodsURLs
+    });
+  }
+
+  updateResourceURLs(resourceURLs) {
+    this.update({
+      resourceURLs: resourceURLs
+    });
+  }
+
   getAddress(gerAddress) {
     this.update({
       gerAddress: gerAddress
