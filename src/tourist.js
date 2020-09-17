@@ -135,17 +135,3 @@ function Root() {
 // })();
 
 ReactDOM.render(<Root />, document.getElementById("ui-root"));
-
-{
-  /* <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                startIcon={<LinkIcon />}
-                onClick={() => {
-                  window.location.href = link;
-                }}
-              >
-                Go to VR
-              </Button> */
-}

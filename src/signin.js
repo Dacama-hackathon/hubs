@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { useHistory } from "react-router-dom";
-import { WrappedIntlProvider } from "./react-components/wrapped-intl-provider";
+// import { useHistorys } from "react-router-dom";
+// import { WrappedIntlProvider } from "./react-components/wrapped-intl-provider";
 import registerTelemetry from "./telemetry";
 import Store from "./storage/store";
 import "./utils/theme";
-import { getLocale, getMessages } from "./utils/i18n";
-import { AuthContextProvider } from "./react-components/auth/AuthContext";
-import { SignInPage } from "./react-components/auth/SignInPage";
+// import { getLocale, getMessages } from "./utils/i18n";
+// import { AuthContextProvider } from "./react-components/auth/AuthContext";
+// import { SignInPage } from "./react-components/auth/SignInPage";
 import "./assets/stylesheets/globals.scss";
 
 // import React from "react";
@@ -67,18 +67,17 @@ window.APP = {
 
 // const classes = useStyles();
 
-function click(url) {
+const click = () => {
   console.log(document.getElementById("email").value, 999);
-  let history = useHistory();
   if (String(document.getElementById("email").value).indexOf("tourist") !== -1) {
     console.log(777);
     // document.location = "/";
-    history.push("/tourist");
+    location.href = "/tourist";
   } else {
-    history.push("/clerk");
+    location.href = "/clerk";
   }
   // spawnMediaInfrontOfPlayer();
-}
+};
 
 function Root() {
   return (
@@ -117,7 +116,7 @@ function Root() {
           <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           <Button
             onClick={() => click()}
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
