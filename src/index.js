@@ -24,3 +24,4 @@ function Root() {
 }
 
 ReactDOM.render(<Root />, document.getElementById("home-root"));
+document.getElementsByClassName("Button__primary-button__xemG8 Button__cta-button__10UdO")[0].click();

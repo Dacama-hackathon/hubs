@@ -31,7 +31,13 @@ function Root() {
   const [town, setTown] = useState("京都市中京区 二条下ル土橋町10番地");
   const [shopName, setShopName] = useState("京みやげ売店");
 
-  const click = () => console.log(prefecture, town, shopName);
+  const click = async () => {
+    const address = { prefecture: prefecture, town: town, shopName: shopName };
+    store.updateAddress(address);
+    store.updateAdmin();
+    // await fetch("http://localhost:3000", "POST", address);
+    console.log(store.state);
+  };
 
   return (
     <WrappedIntlProvider locale={getLocale()} messages={getMessages()}>

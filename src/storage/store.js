@@ -452,6 +452,12 @@ export default class Store extends EventTarget {
     });
   }
 
+  updateAdmin() {
+    this.update({
+      admin: true
+    });
+  }
+
   getAddress(gerAddress) {
     this.update({
       gerAddress: gerAddress

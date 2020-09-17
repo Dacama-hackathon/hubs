@@ -1,5 +1,6 @@
 from wsgiref.simple_server import make_server
 import json
+import os
 
 filePath = './db.json'
 
@@ -37,11 +38,18 @@ def app(environ, start_response):
       appendJSONToFILE(requestBodyJSON, filePath)
       return [json.dumps({'message':'updated!'}).encode("utf-8")]
     elif (requestMethod == 'GET'):
-      f  = open(filePath, "r")
-      contents = json.loads(f.read())
-      print(contents)
-      f.close()
-      return [json.dumps({'travel':contents}).encode("utf-8")]
+      if(os.path.isfile(filePath)):
+        f  = open(filePath, "r")
+        contents = f.read()
+        print(contents)
+        if (len(contents) == 0):
+          return [json.dumps({'travel':[]}).encode("utf-8")]
+        readJSON = json.loads(contents)
+        print(readJSON)
+        f.close()
+        return [json.dumps({'travel':readJSON}).encode("utf-8")]
+      else:
+        return [json.dumps({'travel':[]}).encode("utf-8")]
     else:
       return [json.dumps({'message':'ng!'}).encode("utf-8")]
     

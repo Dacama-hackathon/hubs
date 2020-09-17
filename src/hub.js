@@ -872,6 +872,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const authChannel = new AuthChannel(store);
   const hubChannel = new HubChannel(store, hubId);
   const entryManager = new SceneEntryManager(hubChannel, authChannel, history);
+  if (store.state.admin === true) {
+    const body = {
+      prefecture: store.state.address.prefecture,
+      city: store.state.address.city,
+      storeName: store.state.address.storeName,
+      hubsURL: location.href
+    };
+    await fetch("http://localhost:3000/travel", { method: "POST", body: JSON.stringify(body) });
+  }
   await fetch("http://localhost:3000/travel", {})
     .then(res => res.json())
     .then(json => {
