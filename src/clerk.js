@@ -24,37 +24,14 @@ window.APP = {
   store
 };
 
-function click(prefecture, town, shopName) {
-  // store.state["address"] = {
-  //   prefecture: document.getElementById("combo-box-demo").value,
-  //   city: document.getElementById("standard-basic").value,
-  //   storeName: document.getElementById("standard-required").value
-  // };
-  store.updateAddress({
-    prefecture: prefecture,
-    city: town,
-    storeName: shopName
-  });
-  console.log(
-    store.state
-    // document.getElementById("combo-box-demo").value,
-    // document.getElementById("standard-basic").value,
-    // document.getElementById("standard-required").value
-  );
-
-  // spawnMediaInfrontOfPlayer();
-}
-
-const prefectureList = [
-  { value: "hokkaido", label: "北海道" },
-  { value: "tokyo", label: "東京都" },
-  { value: "osaka", label: "大阪府" }
-];
+const prefectureList = ["北海道", "東京都", "大阪府", "沖縄県"];
 
 function Root() {
-  const [prefecture, setPrefecture] = useState("東京都");
+  const [prefecture, setPrefecture] = useState(prefectureList[0]);
   const [town, setTown] = useState("京都市中京区 二条下ル土橋町10番地");
   const [shopName, setShopName] = useState("京みやげ売店");
+
+  const click = () => console.log(prefecture, town, shopName);
 
   return (
     <WrappedIntlProvider locale={getLocale()} messages={getMessages()}>
@@ -62,66 +39,42 @@ function Root() {
         {/* {JSON.stringify(store.state)} */}
         <Header />
         <Box marginTop={8} marginX={3}>
-          {/* <Grid container spacing={0}> */}
-          {/* <Grid item xs> */}
           <Box my={4}>
             <Autocomplete
-              id="combo-box-demo"
+              value={prefecture}
+              onChange={(event, newValue) => {
+                console.log(newValue);
+                setPrefecture(newValue);
+              }}
               options={prefectureList}
-              getOptionLabel={option => option.label}
-              // style={{ width: 400 }}
-              // onChange={e => {
-              //   console.log(e.target.value);
-              //   setPrefecture(e.target.label);
-              // }}
-              renderInput={params => (
-                <TextField
-                  onChange={e => {
-                    console.log(e.target);
-                    setPrefecture(e.target.label);
-                  }}
-                  {...params}
-                  label="都道府県"
-                  variant="outlined"
-                />
-              )}
+              renderInput={params => <TextField {...params} label="都道府県" variant="outlined" />}
             />
           </Box>
           <Box my={4}>
             <TextField
               required
-              id="standard-basic"
               label="市町村区"
               defaultValue={town}
               fullWidth
-              onChange={() => console.log(prefecture)}
+              onChange={e => setTown(e.target.value)}
             />
           </Box>
           <Box my={4}>
             <TextField
               required
-              id="standard-required"
               label="店名"
               defaultValue={shopName}
               fullWidth
-              onChange={() => console.log(prefecture)}
+              onChange={e => setShopName(e.target.value)}
             />
           </Box>
-          <Box m="auto">
+          <Box my={4}>
             <Grid container justify="center">
-              <Button
-                onClick={click.bind(this, prefecture, town, shopName)}
-                variant="contained"
-                color="primary"
-                size="large"
-                startIcon={<SaveIcon />}
-              >
+              <Button variant="contained" color="primary" size="large" startIcon={<SaveIcon />} onClick={() => click()}>
                 Save
               </Button>
             </Grid>
           </Box>
-          {/* </Grid> */}
-          {/* </Grid> */}
         </Box>
       </AuthContextProvider>{" "}
     </WrappedIntlProvider>
