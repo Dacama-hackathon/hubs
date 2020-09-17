@@ -272,6 +272,7 @@ module.exports = async (env, argv) => {
       verify: path.join(__dirname, "src", "verify.js"),
       admin: path.join(__dirname, "src", "admin.js"),
       clerk: path.join(__dirname, "src", "clerk.js"),
+      tourist: path.join(__dirname, "src", "tourist.js"),
       "whats-new": path.join(__dirname, "src", "whats-new.js")
     },
     output: {
@@ -317,6 +318,10 @@ module.exports = async (env, argv) => {
           {
             from: /^\/clerk/,
             to: "/clerk.html"
+          },
+          {
+            from: /^\/tourist/,
+            to: "/tourist.html"
           }
         ]
       },
@@ -614,6 +619,14 @@ module.exports = async (env, argv) => {
         filename: "clerk.html",
         template: path.join(__dirname, "src", "clerk.html"),
         chunks: ["clerk"],
+        minify: {
+          removeComments: false
+        }
+      }),
+      new HTMLWebpackPlugin({
+        filename: "tourist.html",
+        template: path.join(__dirname, "src", "tourist.html"),
+        chunks: ["tourist"],
         minify: {
           removeComments: false
         }
