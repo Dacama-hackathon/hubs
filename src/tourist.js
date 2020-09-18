@@ -55,7 +55,17 @@ function Root() {
         .then(json => {
           store.getAddress(json["travel"]);
           console.log("state", store.state.gerAddress);
-          setShops(store.state.gerAddress);
+
+          // stateの重複しているか, 同一の店なのか検知が無いので重複は削除
+          const tempMap = {};
+          for (const gerAddress of store.state.gerAddress) {
+            tempMap[JSON.stringify(gerAddress)] = gerAddress;
+          }
+          let address = [];
+          for (const [_, value] of Object.entries(tempMap)) {
+            address.push(value);
+          }
+          setShops(address);
         });
     };
     fetchData();
@@ -103,7 +113,7 @@ function Root() {
                                     </Typography>
                                   </CardContent>
                                   <CardActions>
-                                    <Button size="small" onClick={() => (window.location.href = shop.hubsURL)}>
+                                    <Button size="small" onClick={() => window.open(shop.hubsURL)}>
                                       Go to VR
                                     </Button>
                                   </CardActions>
