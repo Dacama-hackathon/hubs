@@ -1,10 +1,45 @@
-# [Mozilla Hubs](https://hubs.mozilla.com/)
+# [Dacama Hubs](https://hubs.mozilla.com/)
 
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0) [![Build Status](https://travis-ci.org/mozilla/hubs.svg?branch=master)](https://travis-ci.org/mozilla/hubs) [![Discord](https://img.shields.io/discord/498741086295031808)](https://discord.gg/CzAbuGu)
 
 The client-side code for [Mozilla Hubs](https://hubs.mozilla.com/), an online 3D collaboration platform that works for desktop, mobile, and VR platforms.
 
 [Learn more about Hubs](https://hubs.mozilla.com/docs/welcome.html)
+
+## 日本語ドキュメント
+
+### 依存
+- Python3
+- Node.js
+
+### 試す
+
+ブラウザはFireFox推薦
+
+ターミナル画面1(Webサーバ立ち上げ)
+```sh
+$ git clone https://github.com/Dacama-hackathon/hubs.git
+$ cd hubs
+$ npm i # かなり時間がかかるので気長に待つ
+$ npm run dev # https://localhost:8080 にアクセスし, 自己証明書を許可する.
+```
+
+ターミナル画面2(APIサーバ立ち上げ)
+```sh
+$ cd hubs/api
+$ python3 main.py # ./db.jsonがデータ保存場所
+```
+
+準備ができたら
+https://localhost:8080/signin
+にアクセス.
+
+メールアドレスに "tourist" という文字列を含みログインボタンを押すと, 観光客向けの画面遷移.
+それ以外でログインボタンを押すと, お土産屋さん向けの画面遷移.
+
+観光客向けの画面遷移と, お土産屋さん向けの画面遷移 は別々のプライベートタブで行う必要がある(現時点では)
+
+あとは, 画面に従う!
 
 ## Getting Started
 
