@@ -41,6 +41,8 @@ https://localhost:8080/signin
 
 あとは, 画面に従う!
 
+参考動画: https://youtu.be/I1Xjy4zoL1s
+
 ## Getting Started
 
 If you would like to run Hubs on your own servers, check out [Hubs Cloud](https://hubs.mozilla.com/docs/hubs-cloud-intro.html).
