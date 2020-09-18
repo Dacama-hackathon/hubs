@@ -90,7 +90,7 @@ function Root() {
   const [resourceURL, setResourceURL] = useState("");
   const [resourceURLs, setResourceURLs] = useState([
     "https://item-shopping.c.yimg.jp/i/n/trv_61211967",
-    "https://www.youtube.com/watch?v=iBnHVz1SGpw",
+    "https://www.youtube.com/watch?v=fFoH5NWTP7w",
     "http://www.ritsumei.ac.jp/~t-ito/otakara/otakara-kyo2008/yatuhasi.pdf"
   ]);
 
